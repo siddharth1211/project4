@@ -1,0 +1,31 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+{% load crispy_forms_tags  %}
+
+<link rel="stylesheet" href="{%  static 'css/style.css' %}" />
+
+{% block scripts %}
+
+
+{% endblock scripts %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block content %}
+
+ <div class="modal-body" id="post-edit-form">
+          <form id="post-edit-newform" action="" method="post" enctype="multipart/form-data">
+                 {% csrf_token %}
+                   {{ editform | crispy }}
+                 <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" href="{% url 'home'  %}">Close</button>
+                    <button type="submit" class="btn btn-success">+ update</button>
+                 </div>
+          </form>
+ </div>
+
+{% endblock content %}
+

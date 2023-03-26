@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+ {% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>welcome</title>
+
+<nav class="navbar navbar-light bg-light">
+    {% if request.user.is_authenticated %}
+
+<div id="userlogin">
+
+  <a class="navbar-brand">Welcome to Blog App {{ request.user }}</a>
+
+
+                       {% if user.profile.img  %}
+</div>
+    <div id = "user-image">
+            <img src="{{ request.user.profile.img.url }}" width="70"
+                        class="user-img rounded-circle mr-2" onclick="newFunction()" id="logoutModal">
+                   <a href="{% url 'userprofile:settings' user.id  %}">update</a>
+                   <a href="{% url 'userprofile:user_logout' user.id  %}">sign out</a>
+                   <div id="logout-confirm-btn" class="not-visible"></div>
+    </div>
+
+
+                   {% else %}
+<div id="usernologin">
+                  <h2>welcome {{ request.user }}</h2>
+                <div id = "user-image-nologin">
+
+                   <img src = "media/image/default.jpg" length="150px" width="150px">
+                   <a href="{% url 'userprofile:settings' user.id  %}">update</a>
+
+                </div>
+</div>
+                  {% endif %}
+
+                {% else %}
+<div id="user-logout">
+                <a href="{% url 'userprofile:user_login' %}">login</a>
+                <a href="{% url 'userprofile:register_user' %}">signup</a>
+
+              {% endif %}
+</div>
+
+
+
+</nav>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="{%  static 'css/style.css' %}" />
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" defer></script>
+
+
+<script src="{% static 'js/updateprofile.js'  %}" defer ></script>
+<script src="{% static 'js/blog/details.js'  %}" defer ></script>
+<script src="{% static 'js/blog/loadPostdata.js'  %}" defer ></script>
+
+
+
+
+</head>
+<body>
+
+<div class="container mt-3">
+
+</div>
+     {% block content %}
+
+
+    {% endblock content %}
+
+
+</body>
+</html>

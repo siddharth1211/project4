@@ -1,0 +1,38 @@
+{% extends 'navbar.html' %}
+
+    {% block scripts %}
+
+    {% endblock scripts %}
+
+
+    {% block content %}
+    {% endblock content %}
+
+
+{% load static %}
+<link rel="stylesheet" href="{%  static 'css/style.css' %}" />
+
+<script scr="{% static 'js/profile/updateprofile.js'  %}" ></script>
+
+    <meta charset="UTF-8">
+    <title>welcome</title>
+
+<head>
+
+{% if request.user.is_authenticated %}
+<p>welcome {{ request.user }}</p>
+<img src = "{{ request.user.profile.img.url }}" length="50px" width="150px">
+<a href="{% url 'userprofile:settings' user.id  %}">update</a>
+
+{% else %}
+<a href="login/">login</a>
+<a href="signup/">signup</a>
+{% endif %}
+
+</head>
+<body>
+
+</body>
+</html>
+</body>
+</html>

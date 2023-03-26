@@ -1,0 +1,125 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+{% load crispy_forms_tags  %}
+<link rel="stylesheet" href="{%  static 'css/style.css' %}" />
+{% block content %}
+<div id="spinner-box-new" >
+    <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+</div>
+
+<div id="details{{ x.id }}" class="post-new-details" data-div-id="{{ x.id }}" >
+
+<h2> {{ x.body }} </h2>
+
+</div>
+<br>
+
+<button type="button" id="close-btn" class="btn btn-info">Close</button>
+<button type="button" id="update-btn" class="btn btn-primary">update</button>
+<button type="button" id="delete-btn" class="btn btn-danger">delete</button>
+<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#commentPostModal">
+  Comment
+</button>
+
+
+
+<br>
+<br>
+<br>
+
+<!-- Modal -->
+<div class="modal fade" id="commentPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">comment</h5>
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+      </div>
+      <div class="modal-body">
+          <form id="comment-form" action="" method="post" enctype="multipart/form-data">
+                 {% csrf_token %}
+                   {{ comment_Form|crispy }}
+                   <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">+ Comment</button>
+                   </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-8">
+
+    <div class="headings d-flex justify-content-between align-items-center mb-3">
+        <h5>comments({{ x.comments.count }})</h5>
+    </div>
+</div>
+{% for comment in x.comments.all  %}
+
+<div class="container mt-5">
+            {% if comment.parent is None %}
+
+
+             <div class="row  d-flex justify-content-center">
+
+                    <div class="card p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <div class="user d-flex flex-row align-items-right">
+
+                                  <img src="{{ comment.commented_user.profile.img.url }}" width="30"
+                                      class="user-img rounded-circle mr-2">
+                                  <span>
+                                      <small class="font-weight-bold text-primary">{{ comment.comment_body }}</small>
+                                      <small class="font-weight-bold">{{ comment.commented_user }}</small>
+                                  </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="bg-white">
+                                <div class="d-flex flex-row fs-12">
+                                  <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                                   <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i>
+                                       <a href="" class="ml-1"
+                                          data-id="{{ comment.id }}">comment</a>
+                                           <form id="replyForm-{{ comment.id }}" class="not-visible"
+                                                 method="post" action="" enctype="multipart/form-data">
+                                               {% csrf_token %}
+                                               <label for="reply">reply: </label>
+                                               <input type="text" id="id_reply_body-{{ comment.id }}"
+                                                      name="reply_comment"/>  <br/>
+                                               <button type="submit" class="btn btn-primary btn-sm">+ reply</button>
+
+                                           </form>
+                                       <br>
+                                       <a href="" class="ml-3" data-id="{{ comment.id }}">load replies</a>
+                                        <div id="load-reply-{{ comment.id }}" class="not-visible"></div>
+<!--                                       <a href="reply/{{ comment.parent.id }}/" class="ml-2">reply</a>-->
+<!--                                             <form id="reply-{{ comment.parent.id }}" method="post" action=" "-->
+<!--                                               enctype="multipart/form-data" class="not-visible">-->
+<!--                                               {% csrf_token %}-->
+<!--                                              {{ reply_Form|crispy }}-->
+<!--                                              <button type="submit" class="btn btn-success">+ submit</button>-->
+<!--                                             </form>-->
+
+                                   </div>
+<!--                                   <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>-->
+                                </div>
+                            </div>
+
+                      </div>
+
+                    </div>
+             {% endif %}
+
+             </div>
+
+{% endfor %}
+{% endblock content %}

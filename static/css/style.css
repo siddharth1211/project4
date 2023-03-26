@@ -1,0 +1,12 @@
+body
+{
+  background-color: green;
+}
+
+.not-visible {
+     display: none;
+}
+
+img {
+  border-radius: 50%;
+}

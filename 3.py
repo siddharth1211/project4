@@ -17,3 +17,5 @@ class Car:
 
 car = Car(94, "km/h")
 print(car)
+car = Car(394, "km/h")
+print(car)
